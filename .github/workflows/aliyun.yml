@@ -25,3 +25,8 @@ jobs:
         run: |
           # 推送镜像到镜像仓库
           docker push ${{ secrets.DOCKER_IMAGE_TAG }}
+
+      - name: Logout Aliyun
+        run: |
+          # 登出阿里云镜像仓库
+          docker logout ${{ secrets.DOCKER_REGISTRY }}
