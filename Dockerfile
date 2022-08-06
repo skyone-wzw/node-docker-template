@@ -1,12 +1,11 @@
-FROM alpine AS builder
+FROM ubuntu AS builder
 WORKDIR /app
-RUN apk add --no-cache --update nodejs yarn
+RUN apt install node yarn
 COPY package.json yarn.lock ./
 RUN yarn install --production
 
-FROM alpine
+FROM luotianyi/distroless-node:latest
 WORKDIR /app
-RUN apk add --no-cache --update nodejs yarn
 COPY --from=builder /app/node_modules ./node_modules
 COPY . .
-CMD [ "yarn", "start" ]
+CMD [ "node", "src/index.js" ]
